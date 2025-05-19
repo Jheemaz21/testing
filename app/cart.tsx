@@ -2,7 +2,13 @@ import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { useCart } from '../context/CartContext';
 
 export default function CartScreen() {
-    const { keranjang, hapus, total, kosongkanKeranjang, setKeranjang, prosesTransaksi } = useCart();
+    const {
+        keranjang = [],
+        hapus,
+        total = 0,
+        kosongkanKeranjang,
+        prosesTransaksi,
+    } = useCart();
 
     const handleProsesTransaksi = () => {
         const berhasil = prosesTransaksi();
@@ -31,6 +37,7 @@ export default function CartScreen() {
                                 </Text>
                                 <TouchableOpacity
                                     onPress={() => hapus(index.toString())}
+
                                     style={styles.hapusBtn}
                                 >
                                     <Text style={styles.hapusText}>Hapus</Text>
@@ -43,6 +50,22 @@ export default function CartScreen() {
 
                     <TouchableOpacity style={styles.button} onPress={handleProsesTransaksi}>
                         <Text style={styles.buttonText}>Proses Transaksi</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.button, styles.kosongBtn]}
+                        onPress={() =>
+                            Alert.alert(
+                                'Konfirmasi',
+                                'Apakah Anda yakin ingin mengosongkan keranjang?',
+                                [
+                                    { text: 'Batal', style: 'cancel' },
+                                    { text: 'Kosongkan', onPress: kosongkanKeranjang },
+                                ]
+                            )
+                        }
+                    >
+                        <Text style={styles.buttonText}>Kosongkan Keranjang</Text>
                     </TouchableOpacity>
                 </>
             )}
@@ -61,14 +84,17 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
-    item: { fontWeight: '600' },
+    item: { fontWeight: '600', flex: 1 },
     hapusBtn: {
         backgroundColor: '#ff6666',
         paddingHorizontal: 10,
+        paddingVertical: 6,
         borderRadius: 6,
+        marginLeft: 10,
     },
-    hapusText: { color: 'white' },
+    hapusText: { color: 'white', fontWeight: '600' },
     total: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -81,6 +107,9 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 12,
         alignItems: 'center',
+    },
+    kosongBtn: {
+        backgroundColor: '#f44336',
     },
     buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
 });

@@ -5,7 +5,25 @@ import { CartProvider } from '../context/CartContext'; // ⬅️ import
 export default function Layout() {
     return (
         <CartProvider> {/* ⬅️ bungkus tab */}
-            <Tabs>
+            <Tabs
+                screenOptions={{
+                    tabBarActiveTintColor: '#2196F3',
+                    tabBarInactiveTintColor: '#888',
+                    tabBarStyle: {
+                        height: 65,
+                        paddingBottom: 8,
+                        paddingTop: 8,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                        backgroundColor: '#fff',
+                        elevation: 10,
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 12,
+                        marginTop: 2,
+                    },
+                }}
+            >
                 <Tabs.Screen
                     name="index"
                     options={{
